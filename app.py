@@ -197,7 +197,7 @@ tab1, tab2 = st.tabs(["SDG 7", "SDG 13"])
 
 # Função para exibir conteúdo de cada aba
 def display_ods_tab(ods_group):
-    st.header(f"SDG - {ods_group}")
+    st.header(f"{ods_group}")
     scores = []
     categories = []
     for variable in variables[ods_group]:
@@ -212,7 +212,7 @@ def display_ods_tab(ods_group):
 
     # Calcula a pontuação final
     percentage_score = calculate_final_score(scores)
-    st.write(f"Final Score para {ods_group}: {percentage_score:.2f}%")
+    st.write(f"Final Score {ods_group}: {percentage_score:.2f}%")
 
     # Exibe o gráfico radar
     st.subheader("Gráfico Radar")
