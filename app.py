@@ -112,8 +112,7 @@ variables = {
                 "3: More than 15 charging stations available."
             ]
         }
-    ]
-}
+
 
 "SDG 13": [
         {
@@ -188,8 +187,6 @@ variables = {
                 "3: More than 10% reduction in emissions through new technologies."
             ]
         }
-    ]
-}
 
     
 
@@ -201,7 +198,7 @@ tab1, tab2 = st.tabs(["SDG 7", "SDG 13"])
 
 # Função para exibir conteúdo de cada aba
 def display_ods_tab(ods_group):
-    st.header(f"Avaliação - {ods_group}")
+    st.header(f"Avaliação - {SDG_group}")
     scores = []
     categories = []
     for variable in variables[ods_group]:
