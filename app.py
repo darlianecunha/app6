@@ -190,14 +190,14 @@ variables = {
 
     
 # Título da aplicação
-st.markdown("<h1 style='color: darkgreen;'>SDG Attributes  - SDG 7 and 13</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: darkgreen;'>SDG Attributes - SDG 7 and 13</h1>", unsafe_allow_html=True)
 
-# Criação de abas para ODS 7 e 13
+# Criação de abas para SDG 7 e 13
 tab1, tab2 = st.tabs(["SDG 7", "SDG 13"])
 
 # Função para exibir conteúdo de cada aba
 def display_ods_tab(ods_group):
-    st.header(f"Avaliação - {SDG_group}")
+    st.header(f"Avaliação - {ods_group}")
     scores = []
     categories = []
     for variable in variables[ods_group]:
