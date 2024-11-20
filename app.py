@@ -111,7 +111,7 @@ variables = {
                 "2: 6-15 charging stations available.",
                 "3: More than 15 charging stations available."
             ]
-        }
+        },
 
 
 "SDG 13": [
