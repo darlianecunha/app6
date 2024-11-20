@@ -110,9 +110,8 @@ variables = {
                 "1: Up to 5 charging stations available.",
                 "2: 6-15 charging stations available.",
                 "3: More than 15 charging stations available."
-            ]
-        },
-
+        ]}
+],
 
 "SDG 13": [
         {
@@ -185,11 +184,11 @@ variables = {
                 "1: Less than 5% reduction in emissions through new technologies.",
                 "2: 5-10% reduction in emissions through new technologies.",
                 "3: More than 10% reduction in emissions through new technologies."
-            ]
-        }
+        ]}
+    
+ ]}
 
     
-
 # Título da aplicação
 st.markdown("<h1 style='color: darkgreen;'>SDG Attributes  - SDG 7 and 13</h1>", unsafe_allow_html=True)
 
