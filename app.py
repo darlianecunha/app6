@@ -231,7 +231,7 @@ with tab2:
 # Rodapé com fonte e créditos
 st.write("---")
 st.markdown(
-    "<p><strong>Tool developed by por Darliane Cunha.</strong></p>", 
+    "<p><strong>Tool developed by Darliane Cunha.</strong></p>", 
     unsafe_allow_html=True
 )
 
