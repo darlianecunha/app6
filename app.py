@@ -227,6 +227,13 @@ with tab1:
 with tab2:
     display_ods_tab("SDG 13")
 
+    
+# Rodapé com fonte e créditos
+st.write("---")
+st.markdown(
+    "<p><strong>Tool developed by por Darliane Cunha.</strong></p>", 
+    unsafe_allow_html=True
+)
 
 
 
