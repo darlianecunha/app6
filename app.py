@@ -10,14 +10,18 @@ def calculate_final_score(scores):
     percentage_score = (total_score / max_score) * 100
     return percentage_score
 
-# Function to plot the radar chart
+# Function to plot the radar chart, excluding zero scores
 def plot_radar_chart(scores, categories):
-    if len(scores) != len(categories):
-        st.error("The number of scores and categories does not match.")
+    # Filter out scores and categories where the score is zero
+    filtered_scores_categories = [(score, category) for score, category in zip(scores, categories) if score > 0]
+    if not filtered_scores_categories:  # Check if all scores are zero
+        st.warning("No data to display on the radar chart. All scores are zero.")
         return None
 
-    values = scores + scores[:1]  # Repeat the first value to close the circle
-    angles = np.linspace(0, 2 * np.pi, len(scores), endpoint=False).tolist()
+    filtered_scores, filtered_categories = zip(*filtered_scores_categories)
+
+    values = list(filtered_scores) + [filtered_scores[0]]  # Repeat the first value to close the circle
+    angles = np.linspace(0, 2 * np.pi, len(filtered_scores), endpoint=False).tolist()
     angles += angles[:1]  # Repeat the first angle to close the chart
 
     fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(polar=True))
@@ -26,7 +30,7 @@ def plot_radar_chart(scores, categories):
     ax.set_yticks(range(1, 4))  # Set the radial grid
     ax.set_yticklabels(range(1, 4))  # Add radial labels
     ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(categories)
+    ax.set_xticklabels(filtered_categories)
 
     # Adding labels for each data point
     for angle, value in zip(angles, values):
@@ -247,7 +251,5 @@ st.markdown(
     "<p><strong>Tool developed by Darliane Cunha.</strong></p>", 
     unsafe_allow_html=True
 )
-
-
 
 
