@@ -43,6 +43,7 @@ def export_chart_as_image(fig):
 
 # Variables grouped by SDG with prefixes
 variables =
+    {
     "SDG 7": [
         {
             "name": "7.1 Number of awareness programs on rational energy use",
