@@ -1,35 +1,48 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+from io import BytesIO
 
-# Função para calcular a pontuação final
+# Function to calculate the final score
 def calculate_final_score(scores):
-    max_score = len(scores) * 3  # pontuação máxima se todas as variáveis tiverem nota 3
+    max_score = len(scores) * 3  # Maximum score if all variables are scored 3
     total_score = sum(scores)
     percentage_score = (total_score / max_score) * 100
     return percentage_score
 
-# Função para plotar o gráfico radar
+# Function to plot the radar chart
 def plot_radar_chart(scores, categories):
     if len(scores) != len(categories):
-        st.error("O número de pontuações e categorias não coincide.")
+        st.error("The number of scores and categories does not match.")
         return None
-    
-    values = scores + scores[:1]  # Repetir o primeiro valor para fechar o círculo
+
+    values = scores + scores[:1]  # Repeat the first value to close the circle
     angles = np.linspace(0, 2 * np.pi, len(scores), endpoint=False).tolist()
-    angles += angles[:1]  # Repetir o primeiro ângulo para fechar o gráfico
+    angles += angles[:1]  # Repeat the first angle to close the chart
 
     fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(polar=True))
     ax.fill(angles, values, color='teal', alpha=0.25)
     ax.plot(angles, values, color='teal', linewidth=2)
-    ax.set_yticklabels([])
+    ax.set_yticks(range(1, 4))  # Set the radial grid
+    ax.set_yticklabels(range(1, 4))  # Add radial labels
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels(categories)
+
+    # Adding labels for each data point
+    for angle, value in zip(angles, values):
+        ax.text(angle, value + 0.1, f"{value:.0f}", ha='center', va='center', fontsize=10)
+
     return fig
 
-# Definir variáveis agrupadas por ODS com prefixos
+# Function to export the chart as an image
+def export_chart_as_image(fig):
+    img_buffer = BytesIO()
+    fig.savefig(img_buffer, format='png', dpi=300, bbox_inches="tight")
+    img_buffer.seek(0)
+    return img_buffer
 
-variables = {
+# Variables grouped by SDG with prefixes
+variables =
     "SDG 7": [
         {
             "name": "7.1 Number of awareness programs on rational energy use",
@@ -188,52 +201,54 @@ variables = {
     
  ]}
 
-    
-# Título da aplicação
+# Application title
 st.markdown("<h1 style='color: darkgreen;'>SDG Attributes - SDG 7 and 13</h1>", unsafe_allow_html=True)
 
-# Criação de abas para SDG 7 e 13
+# Tabs for SDG 7 and 13
 tab1, tab2 = st.tabs(["SDG 7", "SDG 13"])
 
-# Função para exibir conteúdo de cada aba
-def display_ods_tab(ods_group):
+# Function to display content for each tab
+def display_ods_tab(ods_group, tab_key):
     st.header(f"{ods_group}")
     scores = []
     categories = []
     for variable in variables[ods_group]:
-        option = st.selectbox(variable["name"], options=variable["options"])
-        scores.append(int(option[0]))  # Converte o primeiro caractere da opção selecionada em inteiro
-        prefix = variable["name"].split(" ")[0]
-        categories.append(prefix)
+        option = st.selectbox(variable["name"], options=variable["options"], key=f"{tab_key}_{variable['name']}")
+        scores.append(int(option[0]))  # Convert the first character of the selected option to integer
+        categories.append(variable["name"].split(" ")[0])
 
     if len(scores) != len(categories):
-        st.error("Erro: O número de pontuações e categorias não coincide.")
+        st.error("Error: The number of scores and categories does not match.")
         return
 
-    # Calcula a pontuação final
+    # Calculate the final score
     percentage_score = calculate_final_score(scores)
     st.write(f"Final Score {ods_group}: {percentage_score:.2f}%")
 
-    # Exibe o gráfico radar
-    st.subheader("Gráfico Radar")
+    # Display the radar chart
+    st.subheader("Radar Chart")
     radar_chart = plot_radar_chart(scores, categories)
     if radar_chart:
         st.pyplot(radar_chart)
 
-# Exibe as variáveis e resultados para cada aba
+        # Add a button to download the chart
+        img_buffer = export_chart_as_image(radar_chart)
+        st.download_button("Download Chart as PNG", img_buffer, file_name=f"radar_chart_{ods_group}.png", mime="image/png", key=f"{tab_key}_download_button")
+
+# Display variables and results for each tab
 with tab1:
-    display_ods_tab("SDG 7")
+    display_ods_tab("SDG 7", "tab1")
 
 with tab2:
-    display_ods_tab("SDG 13")
+    display_ods_tab("SDG 13", "tab2")
 
-    
-# Rodapé com fonte e créditos
+# Footer with source and credits
 st.write("---")
 st.markdown(
     "<p><strong>Tool developed by Darliane Cunha.</strong></p>", 
     unsafe_allow_html=True
 )
+
 
 
 
