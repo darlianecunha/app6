@@ -199,8 +199,6 @@ variables =
                 "3: More than 10% reduction in emissions through new technologies."
         ]}
     
- ]}
-
 # Application title
 st.markdown("<h1 style='color: darkgreen;'>SDG Attributes - SDG 7 and 13</h1>", unsafe_allow_html=True)
 
