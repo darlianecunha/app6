@@ -76,12 +76,12 @@ st.markdown("<h1 style='color: darkgreen;'>SDG Attributes - SDG 7 and 13</h1>", 
 tab1, tab2 = st.tabs(["SDG 7", "SDG 13"])
 
 # Function to display content for each tab
-def display_ods_tab(ods_group):
+def display_ods_tab(ods_group, tab_key):
     st.header(f"{ods_group}")
     scores = []
     categories = []
     for variable in variables[ods_group]:
-        option = st.selectbox(variable["name"], options=variable["options"])
+        option = st.selectbox(variable["name"], options=variable["options"], key=f"{tab_key}_{variable['name']}")
         scores.append(int(option[0]))  # Convert the first character of the selected option to integer
         categories.append(variable["name"].split(" ")[0])
 
@@ -101,14 +101,14 @@ def display_ods_tab(ods_group):
 
         # Add a button to download the chart
         img_buffer = export_chart_as_image(radar_chart)
-        st.download_button("Download Chart as PNG", img_buffer, file_name="radar_chart.png", mime="image/png")
+        st.download_button("Download Chart as PNG", img_buffer, file_name=f"radar_chart_{ods_group}.png", mime="image/png", key=f"{tab_key}_download_button")
 
 # Display variables and results for each tab
 with tab1:
-    display_ods_tab("SDG 7")
+    display_ods_tab("SDG 7", "tab1")
 
 with tab2:
-    display_ods_tab("SDG 13")
+    display_ods_tab("SDG 13", "tab2")
 
 # Footer with source and credits
 st.write("---")
@@ -116,6 +116,7 @@ st.markdown(
     "<p><strong>Tool developed by Darliane Cunha.</strong></p>", 
     unsafe_allow_html=True
 )
+
 
 
 
